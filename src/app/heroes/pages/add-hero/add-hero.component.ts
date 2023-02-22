@@ -7,6 +7,13 @@ import { switchMap } from 'rxjs';
 @Component({
   selector: 'app-add-heroe',
   templateUrl: './add-heroe.component.html',
+  styles: [
+    `
+      img {
+        width: 100%;
+      }
+    `,
+  ],
 })
 export class AddHeroComponent implements OnInit {
   constructor(
@@ -16,6 +23,9 @@ export class AddHeroComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (!this.router.url.includes('edit')) {
+      return;
+    }
     this.activatedRoute.params
       .pipe(switchMap(({ id }) => this.heroService.getOneHero(id)))
       .subscribe((hero) => (this.superhero = hero));
